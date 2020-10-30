@@ -21,12 +21,12 @@ system-config-selinux.png \
 system-config-selinux.ui \
 usersPage.py
 
-all clean install:
-	$(MAKE) -C po $@
+po-%:
+	$(MAKE) -C po $*
 
-all: $(TARGETS) system-config-selinux.py polgengui.py
+all: $(TARGETS) system-config-selinux.py polgengui.py po-all
 
-install: all
+install: all po-install
 	-mkdir -p $(DESTDIR)$(MANDIR)/man8
 	-mkdir -p $(DESTDIR)$(SHAREDIR)
 	-mkdir -p $(DESTDIR)$(BINDIR)
@@ -58,7 +58,7 @@ install: all
 	done
 	install -m 644 org.selinux.config.policy $(DESTDIR)$(DATADIR)/polkit-1/actions/
 
-clean:
+clean: po-clean
 
 indent:
 
